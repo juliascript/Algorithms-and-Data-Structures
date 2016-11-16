@@ -14,5 +14,5 @@ def binarySearch(array, number):
 	elif array[middleIndexOfArray] < number:
 		return binarySearch(array[middleIndexOfArray:], number)
 
-_bool = binarySearch(array, 47)
-print _bool
+# _bool = binarySearch(array, 47)
+# print _bool

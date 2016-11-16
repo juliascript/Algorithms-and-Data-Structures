@@ -16,5 +16,5 @@ def binarySearch(array, number):
 			upperBound = middleIndex
 	return False
 
-_bool = binarySearch(array, 22)
-print _bool
+# _bool = binarySearch(array, 22)
+# print _bool
