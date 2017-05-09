@@ -97,7 +97,7 @@ class AVLTree(object):
 				self.left_rotation(current) # ** 
 			elif balance_factor > 1:
 				# left heavy
-				pass
+				self.right_rotation(current)
 			else:
 				# balanced
 				pass
@@ -107,7 +107,7 @@ class AVLTree(object):
 		pass
 
 	def left_rotation(self, node):
-		# print('left_rotation({})'.format(node))
+		print('left_rotation({})'.format(node))
 
 		# o    // node
 		#  \
@@ -142,7 +142,7 @@ class AVLTree(object):
 		
 
 	def right_rotation(self, node):
-		# print('right_rotation({})'.format(node))
+		print('right_rotation({})'.format(node))
 
 		# 	  o // node
 		#    /
@@ -150,7 +150,30 @@ class AVLTree(object):
 		#  /
 		# o
 
-		pass
+		new_right_child = node
+		new_left_child_of_right_child = node.left_child.right_child
+		new_parent = node.left_child
+
+		new_parents_parent = node.parent
+		if new_parents_parent is None:
+			# new_parent is becoming the tree's root
+			self.root = new_parent
+			new_parent.parent = None
+		else:
+			# check to see if this is the left or right child of the parent node
+			if node.data > new_parents_parent.data:
+				new_parents_parent.right_child = new_parent
+			else:
+				new_parents_parent.left_child = new_parent
+			new_parent.parent = new_parents_parent
+
+		new_parent.right_child = new_right_child
+		new_right_child.parent = new_parent
+		new_right_child.left_child = new_left_child_of_right_child
+		if new_left_child_of_right_child:
+			new_left_child_of_right_child.parent = new_right_child
+		new_right_child.update_height()
+		new_parent.update_height()
 
 	def items_level_order(self):
 		"""Return a list of all items in this binary search tree found using
@@ -186,14 +209,21 @@ class AVLTree(object):
 if __name__ == "__main__":
 
 	# # Start with an empty AVL tree
+	# avl_tree = AVLTree()
+	# max_num = 3
+	# for item in range(1, max_num + 1):
+	# 	print('Inserting {} into tree...'.format(item))
+	# 	avl_tree.insert(item)
+	# 	print('items in level-order: {}'.format(avl_tree.items_level_order()))
+	# 	print('\n')
+
 	avl_tree = AVLTree()
-	max_num = 3
-	for item in range(1, max_num + 1):
+	data = [3, 2, 1]
+	for item in data:
 		print('Inserting {} into tree...'.format(item))
 		avl_tree.insert(item)
 		print('items in level-order: {}'.format(avl_tree.items_level_order()))
 		print('\n')
-
 
 	# # Start with a balanced AVL tree with 3 nodes
 	# avl_tree = AVLTree([2,1,3])
