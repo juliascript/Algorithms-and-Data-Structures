@@ -16,7 +16,14 @@ class Node(object):
 		return (self.left_child.height if self.left_child else -1) - (self.right_child.height if self.right_child else -1)
 
 	def update_height(self):
-		pass
+		if not self.right_child and not self.left_child:
+			self.height = 0
+		elif not self.right_child:
+			self.height = (self.left_child.height + 1)
+		elif not self.left_child:
+			self.height = (self.right_child.height + 1)
+		else:
+			self.height = (max(self.left_child.height, self.right_child.height) + 1)
 
 
 class AVLTree(object):
@@ -57,6 +64,8 @@ class AVLTree(object):
 					if not current.left_child:
 						current.left_child = n
 						n.parent = current
+						# update heights of parents and rotate if needed
+						self.retrace_loop(n)
 						return
 					else:
 						current = current.left_child
@@ -65,6 +74,8 @@ class AVLTree(object):
 					if not current.right_child:
 						current.right_child = n
 						n.parent = current
+						# update heights of parents and rotate if needed
+						self.retrace_loop(n)
 						return
 					else:
 						current = current.right_child
@@ -72,7 +83,25 @@ class AVLTree(object):
 
 	def retrace_loop(self, node):
 		# print('retrace_loop({})'.format(node))
-		pass
+		
+		current = node.parent
+		while current is not None:
+			# print('current: {}'.format(current))
+
+			current.update_height()
+			balance_factor = current.balance_factor()
+			# print('balance_factor: {}'.format(balance_factor))
+			
+			if balance_factor < -1:
+				# right heavy
+				self.left_rotation(current) # ** 
+			elif balance_factor > 1:
+				# left heavy
+				pass
+			else:
+				# balanced
+				pass
+			current = current.parent
 
 	def update(self, node, data):
 		pass
@@ -86,7 +115,31 @@ class AVLTree(object):
 		#    \
 		# 	  o
 
-		pass
+		new_left_child = node
+		new_right_child_of_left_child = node.right_child.left_child
+		new_parent = node.right_child
+		new_parents_parent = node.parent
+
+		if new_parents_parent is None:
+			# new_parent is becoming the tree's root
+			self.root = new_parent
+			new_parent.parent = None
+		else:
+			# check to see if this is the left or right child of the parent node
+			if node.data > new_parents_parent.data:
+				new_parents_parent.right_child = new_parent
+			else:
+				new_parents_parent.left_child = new_parent
+			new_parent.parent = new_parents_parent
+
+		new_parent.left_child = new_left_child
+		new_left_child.parent = new_parent
+		new_left_child.right_child = new_right_child_of_left_child
+		if new_right_child_of_left_child:
+			new_right_child_of_left_child.parent = new_left_child
+		new_left_child.update_height()
+		new_parent.update_height()
+		
 
 	def right_rotation(self, node):
 		# print('right_rotation({})'.format(node))
