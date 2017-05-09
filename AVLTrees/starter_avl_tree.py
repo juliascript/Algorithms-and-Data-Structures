@@ -102,7 +102,31 @@ class AVLTree(object):
 	def items_level_order(self):
 		"""Return a list of all items in this binary search tree found using
 		level-order traversal"""
-		pass
+		# Create a queue to store nodes not yet traversed in level-order
+		queue = list()
+		# Create an items list
+		items = list()
+		# Enqueue the root node if this tree is not empty
+		if not self.is_empty():
+			queue.append(self.root)
+		# Loop until the queue is empty
+		while len(queue) > 0:
+			# Avoid infinite loop if tree has duplicate child pointers
+			# if len(items) > 10:
+			# 	print(items)
+			# 	return
+			# Dequeue the node at the front of the queue
+			node = queue.pop(0)
+			# Add this node's data to the items list
+			items.append(node.data)
+			# Enqueue this node's left child if it exists
+			if node.left_child is not None:
+				queue.append(node.left_child)
+			# Enqueue this node's right child if it exists
+			if node.right_child is not None:
+				queue.append(node.right_child)
+		# Return the items list
+		return items
 
 
 
