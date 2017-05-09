@@ -41,7 +41,34 @@ class AVLTree(object):
 	def insert(self, data):
 		# print('')
 		# print('Inserting ({}) ...'.format(data))
-		pass
+		
+		n = Node(data)
+
+		if self.root is None:
+			self.root = n
+			return
+		else: 
+			current = self.root
+			while current is not None:
+				if current.data == data:
+					# your preference, raise error or do nothing
+					raise ValueError('%s already in tree.' % (data))
+				elif current.data > data:
+					if not current.left_child:
+						current.left_child = n
+						n.parent = current
+						return
+					else:
+						current = current.left_child
+						continue
+				elif current.data < data:
+					if not current.right_child:
+						current.right_child = n
+						n.parent = current
+						return
+					else:
+						current = current.right_child
+						continue
 
 	def retrace_loop(self, node):
 		# print('retrace_loop({})'.format(node))
