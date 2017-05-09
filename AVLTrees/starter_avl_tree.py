@@ -13,7 +13,7 @@ class Node(object):
 		return 'Node({})'.format(repr(self.data))
 
 	def balance_factor(self):
-		pass
+		return (self.left_child.height if self.left_child else -1) - (self.right_child.height if self.right_child else -1)
 
 	def update_height(self):
 		pass
