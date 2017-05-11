@@ -94,10 +94,28 @@ class AVLTree(object):
 			
 			if balance_factor < -1:
 				# right heavy
-				self.left_rotation(current) # ** 
+
+				# check if right node is left heavy
+				right_child_balance_factor = current.right_child.balance_factor()
+				if right_child_balance_factor >= 1:
+					# right rotation needed before left
+					self.right_rotation(current.right_child)
+
+				self.left_rotation(current)
+				current = current.parent
+				continue
 			elif balance_factor > 1:
 				# left heavy
+
+				# check if left node is right heavy
+				left_child_balance_factor = current.left_child.balance_factor()
+				if left_child_balance_factor <= -1:
+					# left rotation needed before right
+					self.left_rotation(current.left_child)
+
 				self.right_rotation(current)
+				current = current.parent
+				continue
 			else:
 				# balanced
 				pass

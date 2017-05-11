@@ -80,26 +80,26 @@ class AVLTreeTest(unittest.TestCase):
 		assert avl_tree.root.data == 40
 		assert avl_tree.items_level_order() == [40, 10, 50, 5, 30]
 
-	# def test_left_right_rotation_1(self):
-	# 	data = [8, 1, 4]
-	# 	avl_tree = AVLTree(data)
-	# 	assert avl_tree.root.data == 4
-	# 	assert avl_tree.items_level_order() == [4, 1, 8]
+	def test_left_right_rotation_1(self):
+		data = [8, 1, 4]
+		avl_tree = AVLTree(data)
+		assert avl_tree.root.data == 4
+		assert avl_tree.items_level_order() == [4, 1, 8]
 
-	# def test_left_right_rotation_2(self):
-	# 	data = [1, 4, 8, 12, 16, 20, 25, 30, 35, 28]
-	# 	avl_tree = AVLTree(data)
-	# 	assert avl_tree.root.data == 12
-	# 	assert avl_tree.items_level_order() == [12, 4, 25, 1, 8, 20, 30, 16, 28, 35]
+	def test_left_right_rotation_2(self):
+		data = [1, 4, 8, 12, 16, 20, 25, 30, 35, 28]
+		avl_tree = AVLTree(data)
+		assert avl_tree.root.data == 12
+		assert avl_tree.items_level_order() == [12, 4, 25, 1, 8, 20, 30, 16, 28, 35]
 
-	# def test_right_left_rotation_1(self):
-	# 	data = [1, 8, 4]
-	# 	avl_tree = AVLTree(data)
-	# 	assert avl_tree.root.data == 4
-	# 	assert avl_tree.items_level_order() == [4, 1, 8]
+	def test_right_left_rotation_1(self):
+		data = [1, 8, 4]
+		avl_tree = AVLTree(data)
+		assert avl_tree.root.data == 4
+		assert avl_tree.items_level_order() == [4, 1, 8]
 
-	# def test_right_left_rotation_2(self):
-	# 	data = [20, 10, 40, 30, 50, 35]
-	# 	avl_tree = AVLTree(data)
-	# 	assert avl_tree.root.data == 30
-	# 	assert avl_tree.items_level_order() == [30, 20, 40, 10, 35, 50]
+	def test_right_left_rotation_2(self):
+		data = [20, 10, 40, 30, 50, 35]
+		avl_tree = AVLTree(data)
+		assert avl_tree.root.data == 30
+		assert avl_tree.items_level_order() == [30, 20, 40, 10, 35, 50]
