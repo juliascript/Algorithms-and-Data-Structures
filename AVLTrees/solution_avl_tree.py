@@ -116,33 +116,27 @@ class AVLTree(object):
 			
 			if balance_factor < -1:
 				# right heavy
-				if current.right_child:
-					# check the right child of current to see if it's left heavy
-					right_child_balance_factor = current.right_child.balance_factor()
-					if right_child_balance_factor >= 1:
-						# right left
-						self.right_rotation(current.right_child)
-					self.left_rotation(current)
-					current = current.parent
-					continue
-				else:
-					# left
-					self.left_rotation(current)
+				
+				# check the right child of current to see if it's left heavy
+				right_child_balance_factor = current.right_child.balance_factor()
+				if right_child_balance_factor >= 1:
+					# right rotation needed before left
+					self.right_rotation(current.right_child)
+				self.left_rotation(current)
+				current = current.parent
+				continue
 
 			elif balance_factor > 1:
 				# left heavy
-				if current.left_child:
-					# check the left child of current to see if it's right heavy
-					left_child_balance_factor = current.left_child.balance_factor()
-					if left_child_balance_factor <= -1:
-						# left right
-						self.left_rotation(current.left_child)
-					self.right_rotation(current)
-					current = current.parent
-					continue
-				else:
-					# right
-					self.right_rotation(current)
+				
+				# check the left child of current to see if it's right heavy
+				left_child_balance_factor = current.left_child.balance_factor()
+				if left_child_balance_factor <= -1:
+					# left rotation needed before right
+					self.left_rotation(current.left_child)
+				self.right_rotation(current)
+				current = current.parent
+				continue
 			else:
 				# balanced
 				current = current.parent
@@ -167,7 +161,6 @@ class AVLTree(object):
 		new_left_child = node
 		new_right_child_of_left_child = node.right_child.left_child
 		new_parent = node.right_child
-
 		new_parents_parent = node.parent
 
 		if new_parents_parent is None:
@@ -237,10 +230,6 @@ class AVLTree(object):
 			queue.append(self.root)
 		# Loop until the queue is empty
 		while len(queue) > 0:
-			# Avoid infinite loop if tree has duplicate child pointers
-			# if len(items) > 10:
-			# 	print(items)
-			# 	return
 			# Dequeue the node at the front of the queue
 			node = queue.pop(0)
 			# Add this node's data to the items list
